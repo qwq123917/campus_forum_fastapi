@@ -1,0 +1,1 @@
+- [project-refactor](project-refactor.md) — 2026-10后端架构重构：命名规范、拆分、统一依赖

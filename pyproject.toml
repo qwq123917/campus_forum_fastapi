@@ -1,0 +1,30 @@
+[project]
+name = "campus-fastapi"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "zhangsan", email = "3144504553@qq.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "aiomysql>=0.3.2",
+    "cryptography>=50.0.2",
+    "fastapi>=0.143.0",
+    "pydantic>=2.14.0",
+    "pydantic-settings>=2.15.0",
+    "python-multipart>=0.0.32",
+    "redis>=8.1.0",
+    "sqlalchemy[asyncio]>=2.1.4",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[project.scripts]
+campus-fastapi = "campus_fastapi.main:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["campus_fastapi"]

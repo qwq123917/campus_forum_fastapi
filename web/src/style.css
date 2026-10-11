@@ -1,0 +1,293 @@
+/* ========== Glassmorphism Design Tokens ========== */
+:root {
+  /* Colors */
+  --color-primary: #1D9BF0;
+  --color-like: #F91880;
+  --color-success: #00BA7C;
+  --color-warn: #FFD400;
+  --color-bg: #0B0F14;
+  --color-bg-secondary: #16181C;
+  --color-glass: rgba(255, 255, 255, 0.08);
+  --color-glass-light: rgba(255, 255, 255, 0.55);
+  --color-glass-border: rgba(255, 255, 255, 0.14);
+  --color-glass-border-light: rgba(255, 255, 255, 0.75);
+  --color-text: #F7F9F9;
+  --color-text-secondary: #8B98A5;
+  --color-text-dim: #536471;
+  --color-divider: rgba(255, 255, 255, 0.08);
+
+  /* Glass effects */
+  --glass-blur: blur(24px) saturate(160%);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --glass-shadow-light: 0 8px 30px rgba(31, 41, 55, 0.12);
+
+  /* Radius */
+  --radius-card: 20px;
+  --radius-bubble: 18px;
+  --radius-input: 999px;
+  --radius-avatar: 50%;
+  --radius-btn: 999px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+
+  /* Spacing */
+  --sp-4: 4px;
+  --sp-8: 8px;
+  --sp-12: 12px;
+  --sp-16: 16px;
+  --sp-20: 20px;
+  --sp-24: 24px;
+
+  /* Font */
+  --font-family: 'Inter', 'SF Pro', 'Source Han Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 15px / 20px;
+  --font-aux: 13px / 18px;
+  --font-title: 20px / 24px;
+
+  /* Layout */
+  --nav-width: 275px;
+  --main-width: 600px;
+  --sidebar-width: 350px;
+  --tabbar-height: 56px;
+
+  font-family: var(--font-family);
+  font: var(--font-body);
+  color-scheme: dark;
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== Reset ========== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: var(--font-body);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+input, textarea, button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ========== Glass Utilities ========== */
+.glass-card {
+  background: var(--color-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-card);
+}
+
+.glass-card-light {
+  background: var(--color-glass-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-glass-border-light);
+  box-shadow: var(--glass-shadow-light);
+  border-radius: var(--radius-card);
+}
+
+.glass-input {
+  background: var(--color-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-input);
+  padding: 10px 16px;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.glass-input:focus {
+  border-color: var(--color-primary);
+}
+
+.glass-input::placeholder {
+  color: var(--color-text-dim);
+}
+
+.glass-btn-primary {
+  background: linear-gradient(135deg, #1D9BF0 0%, #0D8BD9 100%);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 10px 24px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.glass-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.glass-btn-primary:active {
+  transform: scale(0.97);
+}
+
+.glass-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.glass-btn-ghost {
+  background: var(--color-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-btn);
+  padding: 8px 20px;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.glass-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ========== Scrollbar ========== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ========== Animations ========== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heartBounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.3); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+@keyframes slideInTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.25s ease-out;
+}
+
+.animate-heart {
+  animation: heartBounce 0.3s ease-out;
+}
+
+/* ========== Reduced Motion ========== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .glass-card, .glass-card-light, .glass-input {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* ========== Light Theme Override ========== */
+[data-theme="light"] {
+  /* Colors */
+  --color-bg: #FFFFFF;
+  --color-bg-secondary: #F7F9F9;
+  --color-glass: rgba(0, 0, 0, 0.04);
+  --color-glass-light: rgba(255, 255, 255, 0.75);
+  --color-glass-border: rgba(0, 0, 0, 0.08);
+  --color-glass-border-light: rgba(0, 0, 0, 0.15);
+  --color-text: #0F1419;
+  --color-text-secondary: #536471;
+  --color-text-dim: #8B98A5;
+  --color-divider: rgba(0, 0, 0, 0.08);
+
+  /* Glass effects */
+  --glass-blur: blur(20px) saturate(120%);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --glass-shadow-light: 0 8px 30px rgba(0, 0, 0, 0.06);
+
+  color-scheme: light;
+}
+
+/* Light theme specific overrides */
+[data-theme="light"] .glass-btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .glass-input::placeholder {
+  color: var(--color-text-dim);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 640px) {
+  :root {
+    --nav-width: 0px;
+    --sidebar-width: 0px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  :root {
+    --sidebar-width: 0px;
+  }
+}
+
+@media (min-width: 1441px) {
+  :root {
+    --main-width: 600px;
+  }
+}
