@@ -25,7 +25,6 @@ const showTabbar = computed(() => {
 const activeTab = computed(() => {
   const path = route.path
   if (path === '/') return 'home'
-  if (path.startsWith('/explore') || path.startsWith('/search')) return 'search'
   if (path.startsWith('/notifications')) return 'notifications'
   if (path.startsWith('/chat')) return 'messages'
   if (path.startsWith('/profile')) return 'profile'
@@ -35,7 +34,6 @@ const activeTab = computed(() => {
 function onTabClick(tab: string) {
   const routes: Record<string, string> = {
     home: '/',
-    search: '/',
     notifications: '/',
     messages: '/chat',
     profile: '/profile',
@@ -58,7 +56,6 @@ function onTabClick(tab: string) {
       <div
         v-for="tab in [
           { key: 'home', icon: '🏠', label: '首页' },
-          { key: 'search', icon: '🔍', label: '搜索' },
           { key: 'notifications', icon: '🔔', label: '通知' },
           { key: 'messages', icon: '💬', label: '消息' },
           { key: 'profile', icon: '👤', label: '我' },

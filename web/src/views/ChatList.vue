@@ -12,6 +12,14 @@ const loading = ref(false)
 const finished = ref(false)
 const page = ref(1)
 
+/** 消息分类 */
+const msgCategories = [
+  { icon: '🔔', label: '系统通知', badge: true },
+  { icon: '👍', label: '赞和收藏', badge: false },
+  { icon: '💬', label: '评论和@', badge: false },
+  { icon: '👤', label: '新增关注', badge: false },
+]
+
 /** 加载会话列表 */
 async function loadConversations(reset = false) {
   if (!isLoggedIn()) {
@@ -57,7 +65,6 @@ function formatTime(dateStr: string | null) {
 
 /** 获取对方名字 */
 function getOtherName(conv: ChatConversation) {
-  // 简单显示两个用户名
   return `${conv.user1_name} / ${conv.user2_name}`
 }
 
@@ -76,17 +83,36 @@ onMounted(() => {
 
 <template>
   <div class="chat-list-page" @scroll="onScroll">
-    <!-- 顶部栏 -->
-    <header class="top-bar glass-card">
-      <h1 class="top-title">💬 消息</h1>
+    <!-- 顶部导航栏 -->
+    <header class="top-bar">
+      <h1 class="top-title">消息</h1>
+      <div class="top-actions">
+        <span class="top-action-icon" title="搜索">🔍</span>
+        <span class="top-action-icon" title="清空">🗑️</span>
+      </div>
     </header>
+
+    <!-- 消息分类快捷区 -->
+    <div class="category-bar">
+      <div
+        v-for="cat in msgCategories"
+        :key="cat.label"
+        class="category-item"
+      >
+        <div class="category-icon-wrap">
+          <span class="category-icon">{{ cat.icon }}</span>
+          <span v-if="cat.badge" class="category-badge"></span>
+        </div>
+        <span class="category-label">{{ cat.label }}</span>
+      </div>
+    </div>
 
     <!-- 会话列表 -->
     <div class="conv-list">
       <div
         v-for="conv in conversations"
         :key="conv.id"
-        class="conv-card glass-card animate-fade-in"
+        class="conv-card animate-fade-in"
         @click="router.push(`/chat/${conv.id}`)"
       >
         <div class="conv-avatar">
@@ -109,7 +135,7 @@ onMounted(() => {
       <div v-if="finished && conversations.length > 0" class="finished-state">
         没有更多会话了
       </div>
-      <div v-if="!loading && finished && conversations.length === 0" class="empty-state glass-card">
+      <div v-if="!loading && finished && conversations.length === 0" class="empty-state">
         <span class="empty-icon">💬</span>
         <p>暂无会话</p>
       </div>
@@ -124,19 +150,17 @@ onMounted(() => {
   overflow-y: auto;
 }
 
-/* ========== 顶部栏 ========== */
+/* ========== 顶部导航栏 ========== */
 .top-bar {
   position: sticky;
   top: 0;
   z-index: 50;
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  border-radius: 0;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid var(--color-glass-border);
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .top-title {
@@ -145,35 +169,100 @@ onMounted(() => {
   color: var(--color-text);
 }
 
-/* ========== 会话列表 ========== */
-.conv-list {
-  padding: 8px 12px 20px;
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.top-action-icon {
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.top-action-icon:active {
+  transform: scale(0.9);
+}
+
+/* ========== 消息分类快捷区 ========== */
+.category-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding: 16px 8px;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.category-item {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 6px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.category-icon-wrap {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--color-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.category-item:active .category-icon-wrap {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.category-icon {
+  font-size: 20px;
+}
+
+.category-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-like);
+}
+
+.category-label {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+/* ========== 会话列表 ========== */
+.conv-list {
+  padding: 0 0 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .conv-card {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s;
-}
-
-.conv-card:hover {
-  transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.22);
+  transition: background 0.15s;
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .conv-card:active {
-  transform: scale(0.98);
+  background: var(--color-glass);
 }
 
 .conv-avatar {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: var(--radius-avatar);
   background: linear-gradient(135deg, #1D9BF0, #0D8BD9);
   display: flex;
